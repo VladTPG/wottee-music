@@ -9,13 +9,15 @@ function App() {
 
     useEffect(()=>{
         const localUser = localStorage.getItem("user")
-        if(!localUser && currentUser)
+        console.log(localUser)
+        console.log(currentUser)
+        if(!localUser)
         {
             localStorage.setItem("user",JSON.stringify(currentUser))
         }
         else if(localUser&&!currentUser)
         {
-            setCurrentUser(JSON.parse(localStorage.getItem("user")))
+            setCurrentUser(JSON.parse(localUser))
         }
 
     },[currentUser])

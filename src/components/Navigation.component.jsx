@@ -5,6 +5,8 @@ import HomeButton from "./HomeButton.component.jsx"
 import SearchButton from "./SearchButton.component.jsx";
 import {db,app} from "../utils/firebase.js"
 import {collection,addDoc, getDocs,doc} from "firebase/firestore"
+import {useContext} from "react";
+import {UserContext} from "../contexts/UserContext.jsx";
 function Navigation() {
     const handleClick = async () => {
         const collectionRef = collection(db, "users")
@@ -21,10 +23,15 @@ function Navigation() {
             console.log(doc.id," => ",doc.data());
         })
     }
+    const {setCurrentUser} = useContext(UserContext)
     return(
     <div className="flex flex-col w-fit m-2 gap-1">
         <div className = "bg-backgroundAccent text-gray-200 rounded-md p-3 flex flex-col gap-5">
-            <HomeButton/>
+            <HomeButton onClick={
+                ()=>{
+                    return null
+                }
+            }/>
             <SearchButton/>
         </div>
         <div className = "bg-backgroundAccent text-gray-200 rounded-md p-3 flex flex-col gap-5">

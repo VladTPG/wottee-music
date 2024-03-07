@@ -2,7 +2,6 @@ import {useState} from "react";
 import {useContext} from "react";
 import {signInUserWithEmailAndPassword} from "../utils/firebase.js";
 import {UserContext} from "../contexts/UserContext.jsx";
-import {useEffect} from "react";
 
 const Authentication = () => {
     const [logInDetails, setLogInDetails] = useState({
@@ -10,13 +9,13 @@ const Authentication = () => {
         password:"",
     })
     const {email,password} = logInDetails
-    const {setCurrentUser} = useContext(UserContext)
+    const {currentUser,setCurrentUser} = useContext(UserContext)
 
 
     return (
-        <div className="text-white bg-sign-in-background h-screen bg-no-repeat bg-cover flex justify-center items-center">
-            <div className="bg-backgroundAccent p-20 text-xl font-bold rounded-2xl flex flex-col gap-6">
-                <div className="flex items-center text-3xl gap-3 font-bold">LOG IN TO
+        <div className="text-white bg-sign-in-background bg-no-repeat bg-cover flex justify-center items-center min-h-screen">
+            <div className="bg-backgroundAccent p-10 text-md font-bold rounded-2xl flex flex-col gap-6 my-5">
+                <div className="flex items-center text-xl gap-3 font-bold">LOG IN TO
                     <img src="/src/assets/wottee-music-high-resolution-logo-transparent.png" className="w-[14rem]" alt="logo"/>
                 </div>
                 <p className="text-center">Sign in with:</p>
@@ -52,12 +51,12 @@ const Authentication = () => {
                             }
                         }/>
                     </div>
-                    <button type="submit" className='my-5 bg-pink-700 p-5 rounded-2xl hover:cursor-pointer' onClick={
-                        () => {
-                            const user = signInUserWithEmailAndPassword(email, password)
-                            setCurrentUser(user)
-                            console.log(user)
-                        }
+                    <button type="submit" className='my-5 bg-pink-700 p-5 rounded-2xl hover:cursor-pointer' onClick={async () => {
+                        const {user} = signInUserWithEmailAndPassword(email, password)
+                        await user.reload()
+                        setCurrentUser(user)
+                        console.log(user)
+                    }
                     }>
                         Sign in
                     </button>
