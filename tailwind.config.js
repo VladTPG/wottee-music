@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage:{
+        'sign-in-background':'url("./assets/layered-waves-haikei (2).svg")'
+      },
       colors:{
         transparent: "transparent",
         // white:"#f1f1f1",
