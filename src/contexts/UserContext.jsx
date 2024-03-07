@@ -5,6 +5,7 @@ export const UserContext = createContext({
     setCurrentUser: () => null,
 })
 
+// eslint-disable-next-line react/prop-types
 export const UserProvider = ({children}) => {
     const [currentUser,setCurrentUser] = useState(null)
     const value = {currentUser,setCurrentUser};
