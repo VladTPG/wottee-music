@@ -9,12 +9,17 @@ const Authentication = () => {
         password:"",
     })
     const {email,password} = logInDetails
-    const {currentUser,setCurrentUser} = useContext(UserContext)
 
+    const handleSubmit = async (event) =>{
+        event.preventDefault();
+        const {user} = await signInUserWithEmailAndPassword(email, password)
+        localStorage.setItem("user",JSON.stringify(user))
+        console.log(user)
+    }
 
     return (
         <div className="text-white bg-sign-in-background bg-no-repeat bg-cover flex justify-center items-center min-h-screen">
-            <div className="bg-backgroundAccent p-10 text-md font-bold rounded-2xl flex flex-col gap-6 my-5">
+            <div className="bg-backgroundAccent p-20 text-md font-bold rounded-2xl flex flex-col gap-6 my-5">
                 <div className="flex items-center text-xl gap-3 font-bold">LOG IN TO
                     <img src="/src/assets/wottee-music-high-resolution-logo-transparent.png" className="w-[14rem]" alt="logo"/>
                 </div>
@@ -28,7 +33,7 @@ const Authentication = () => {
                     Continue with Facebook
                 </button>
                 <div className="h-[0.1rem] w-[100%] bg-gray-400"></div>
-                <form className="flex flex-col gap-5">
+                <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
                     <div className="flex flex-col gap-5">
                         <label htmlFor="signInEmail">Email</label>
                         <input type="email" id="signInEmail" className="bg-backgroundAccent border-2 rounded-xl p-2" onChange={
@@ -51,17 +56,10 @@ const Authentication = () => {
                             }
                         }/>
                     </div>
-                    <button type="submit" className='my-5 bg-pink-700 p-5 rounded-2xl hover:cursor-pointer' onClick={async () => {
-                        const {user} = signInUserWithEmailAndPassword(email, password)
-                        await user.reload()
-                        setCurrentUser(user)
-                        console.log(user)
-                    }
-                    }>
+                    <button type="submit" className='my-5 bg-pink-700 p-5 rounded-2xl hover:cursor-pointer'>
                         Sign in
                     </button>
                 </form>
-
             </div>
         </div>
     )

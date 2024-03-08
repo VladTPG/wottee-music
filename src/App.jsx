@@ -1,27 +1,13 @@
 import {Routes, Route} from "react-router-dom";
 import Navigation from "./components/Navigation.component.jsx"
 import Authentication from "./components/Authentication.component.jsx"
-import {UserContext} from "./contexts/UserContext.jsx";
-import {useContext, useEffect} from "react";
+import {useEffect, useState} from "react";
 
 function App() {
-    const {currentUser,setCurrentUser} = useContext(UserContext)
-
+    const [currentUser,setCurrentUser] = useState(null)
     useEffect(()=>{
-        const localUser = localStorage.getItem("user")
-        console.log(localUser)
-        console.log(currentUser)
-        if(!localUser)
-        {
-            localStorage.setItem("user",JSON.stringify(currentUser))
-        }
-        else if(localUser&&!currentUser)
-        {
-            setCurrentUser(JSON.parse(localUser))
-        }
-
-    },[currentUser])
-
+        setCurrentUser(JSON.parse(localStorage.getItem("user")))
+    },[])
     return (
         <Routes>
             <Route path="/" element={currentUser ? <Navigation/> : <Authentication/>} >
