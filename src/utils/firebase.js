@@ -1,6 +1,8 @@
 import { initializeApp} from "firebase/app";
 import {getFirestore,doc,setDoc,getDoc} from "firebase/firestore"
-import {getAuth,signInWithEmailAndPassword} from "firebase/auth"
+import {getAuth,signInWithEmailAndPassword, signInWithPopup} from "firebase/auth"
+import {GoogleAuthProvider,FacebookAuthProvider} from "firebase/auth"
+
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -11,6 +13,8 @@ const firebaseConfig = {
     measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
+const googleAuthProvider = new GoogleAuthProvider();
+const facebookAuthProvider = new FacebookAuthProvider();
 export const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
@@ -43,3 +47,11 @@ export const signInUserWithEmailAndPassword = async (email, password) => {
     if (!email || !password) return;
     return await signInWithEmailAndPassword(auth, email, password);
 };
+
+export const signInUserWithGoogle = async () => {
+    return await signInWithPopup(auth, googleAuthProvider);
+}
+
+export const signInUserWithFacebook = async () => {
+    return await signInWithPopup(auth, facebookAuthProvider);
+}

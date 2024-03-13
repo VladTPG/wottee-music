@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       backgroundImage:{
-        'sign-in-background':'url("./assets/layered-waves-haikei (2).svg")'
+        'sign-in-background':'url("./assets/layered-waves-haikei (2).svg")',
+
       },
       colors:{
         transparent: "transparent",
